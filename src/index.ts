@@ -25,8 +25,8 @@ interface WallhavenWallpaperResult {
 }
 
 
-app.get('/', function (req, res) {
-    return wallhaven.search({sorting:'random', order:'desc'}).then((wallpapers: WallhavenSearchResult) => {
+app.get('/', function (req, res, next) {
+    wallhaven.search({sorting:'random', order:'desc'}).then((wallpapers: WallhavenSearchResult) => {
         const firstId = wallpapers.data[0].id;
         console.log('Loading',firstId);
         return wallhaven.wallpaper(firstId);
@@ -38,10 +38,11 @@ app.get('/', function (req, res) {
                 .grayscale(true)
                 .toFormat(sharp.format.png)
             )
-            .pipe(res); 
+            .pipe(res);
+        
     }).catch(error => {
-        res.status(500).end();
-    })
+        next(error);
+    });
 });
 
   
