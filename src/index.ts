@@ -1,11 +1,11 @@
 import * as express from 'express';
-import * as request from 'request';
-import * as sharp from 'sharp';
+import * as floydSteinberg from 'floyd-steinberg';
+import * as jimp from 'jimp';
 
 const wallhaven = require('wallhaven.js')(); 
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 const app = express();
 
 interface WallhavenSearchResult {
@@ -30,22 +30,24 @@ app.get('/', function (req, res, next) {
         const firstId = wallpapers.data[0].id;
         console.log('Loading',firstId);
         return wallhaven.wallpaper(firstId);
-    }).then((wallpaper: WallhavenWallpaperResult) => {
-        request.get(wallpaper.data.path)
-            .pipe(
-                sharp()
-                .resize(800, 480)
-                .grayscale(true)
-                .toFormat(sharp.format.png)
-            )
-            .pipe(res);
-        
-    }).catch(error => {
+    })
+    .then((wallpaper: WallhavenWallpaperResult) => {
+        return jimp
+            .read(wallpaper.data.path)
+            .then(res => res
+                .cover(800, 480)
+            ).then(jimp => {
+                jimp.bitmap = floydSteinberg(jimp.bitmap);
+                return jimp.getBufferAsync('image/bmp');
+            })
+    })
+    .then(buffer => res.send(buffer))
+    .catch(error => {
         next(error);
     });
 });
 
   
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0' , () => {
     console.log(`Server is listening on port ${PORT}`);
 });
