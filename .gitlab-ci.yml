@@ -2,7 +2,8 @@ image: node:lts
 
 stages:
   - prepare
-  - build
+  - buildapp
+  - builddocker
   - publish
 
 cache:
@@ -20,12 +21,12 @@ Install Dependencies:
     - npm install
 
 Build App:
-  stage: build
+  stage: buildapp
   script:
     - npm run build
 
 Build Docker:
-  stage: publish
+  stage: builddocker
   image: docker:stable
   only:
     - master
@@ -43,7 +44,7 @@ Build Docker:
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
 
 Publish Docker:
-  stage: push
+  stage: publish
   image: docker:stable
   only:
     - master
