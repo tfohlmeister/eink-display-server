@@ -13,8 +13,10 @@ cache:
 
 Login To Registry:
   stage: prepare
+  image: docker:stable
   script:
     - docker login 
+    
 Install Dependencies:
   stage: prepare
   script:
