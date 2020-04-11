@@ -1,0 +1,15 @@
+image: node:lts
+
+stages:
+  - prepare
+
+cache:
+  untracked: true
+  paths:
+   - node_modules/
+
+Prepare:
+  stage: prepare
+  script:
+    - npm install
+
