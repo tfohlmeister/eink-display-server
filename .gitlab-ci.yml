@@ -2,14 +2,53 @@ image: node:lts
 
 stages:
   - prepare
+  - build
+  - publish
 
 cache:
   untracked: true
   paths:
    - node_modules/
 
-Prepare:
+Login To Registry:
+  stage: prepare
+  script:
+    - docker login 
+Install Dependencies:
   stage: prepare
   script:
     - npm install
 
+Build App:
+  stage: build
+  script:
+    - npm run build
+
+Build Docker:
+  stage: publish
+  image: docker:stable
+  only:
+    - master
+  script:
+    - >
+      docker build
+      --pull
+      --build-arg http_proxy=$http_proxy
+      --build-arg https_proxy=$https_proxy
+      --build-arg no_proxy=$no_proxy
+      --build-arg VCS_REF=$CI_COMMIT_SHA
+      --build-arg VCS_URL=$CI_PROJECT_URL
+      --cache-from $CI_REGISTRY_IMAGE:latest
+      --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+
+Publish Docker:
+  stage: push
+  image: docker:stable
+  only:
+    - master
+  script:
+    - echo -n $CI_JOB_TOKEN | docker login -u gitlab-ci-token --password-stdin $CI_REGISTRY
+    - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE:latest
