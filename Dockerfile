@@ -12,6 +12,7 @@ COPY package.json /opt/einkserver/
 RUN npm install --production --quiet
 COPY dist/ /opt/einkserver/
 
+VOLUME [ "/images" ]
 
 # Run server
 EXPOSE 3000
