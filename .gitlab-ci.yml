@@ -29,17 +29,17 @@ Publish Docker:
     - docker pull $CI_REGISTRY_IMAGE:latest || true
     - >
       echo docker build
-        --pull
-        --cache-from $CI_REGISTRY_IMAGE:latest
-        --tag $CI_REGISTRY_IMAGE:$IMAGE_TAG
-        --tag $CI_REGISTRY_IMAGE:latest
-        .
+      --pull
+      --cache-from $CI_REGISTRY_IMAGE:latest
+      --tag $CI_REGISTRY_IMAGE:$IMAGE_TAG
+      --tag $CI_REGISTRY_IMAGE:latest
+      .
     - >
       docker build
-        --pull
-        --cache-from $CI_REGISTRY_IMAGE:latest
-        --tag $CI_REGISTRY_IMAGE:$IMAGE_TAG
-        --tag $CI_REGISTRY_IMAGE:latest
-        .
+      --pull
+      --cache-from $CI_REGISTRY_IMAGE:latest
+      --tag $CI_REGISTRY_IMAGE:$IMAGE_TAG
+      --tag $CI_REGISTRY_IMAGE:latest
+      .
     - docker push $CI_REGISTRY_IMAGE:$IMAGE_TAG
     - docker push $CI_REGISTRY_IMAGE:latest
