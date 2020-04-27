@@ -13,7 +13,7 @@ export class LocalImageService extends ImageService {
     private excludeDirs: Array<string>;
     private watcher: chokidar.FSWatcher;
 
-    constructor(dir: string, showHidden: boolean, excludeDirs?: Array<string>) {
+    constructor(dirs: Array<string>, showHidden: boolean, excludeDirs?: Array<string>) {
         super();
         this.excludeDirs = (excludeDirs || []).map(d => path.normalize(d));
 
@@ -34,7 +34,7 @@ export class LocalImageService extends ImageService {
             const validFileEnding = imageFileEndings.reduce((acc, ending) => acc || nameLC.endsWith(ending.toLocaleLowerCase()), false);
             return !validFileEnding;
         };
-        this.watcher = chokidar.watch(dir, {
+        this.watcher = chokidar.watch(dirs, {
             ignorePermissionErrors: true,
             ignored: checkIgnored,
             

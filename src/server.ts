@@ -6,7 +6,7 @@ import { LocalImageService } from './services/local.service';
 import { WallhavenImageService } from './services/wallhaven.service';
 
 const PORT = Number(process.env.PORT) || 3000;
-const LOCAL_FOLDER = process.env.LOCAL_FOLDER || '/images';
+const LOCAL_FOLDERS = process.env.LOCAL_FOLDERS ? (process.env.LOCAL_FOLDERS || '').split(',') : ['/images'];
 const LOCAL_EXCLUDE = (process.env.LOCAL_EXCLUDE || '').split(',');
 const LOCAL_SHOW_HIDDEN = Boolean(process.env.LOCAL_SHOW_HIDDEN) || false;
 
@@ -15,7 +15,7 @@ const app = express();
 // init services
 const routes: {[key in string]: ImageService} = {
     '/wallpaper.bmp': new WallhavenImageService(),
-    '/local.bmp': new LocalImageService(LOCAL_FOLDER, LOCAL_SHOW_HIDDEN, LOCAL_EXCLUDE)
+    '/local.bmp': new LocalImageService(LOCAL_FOLDERS, LOCAL_SHOW_HIDDEN, LOCAL_EXCLUDE)
 };
 
 Object.keys(routes).map(route => {
