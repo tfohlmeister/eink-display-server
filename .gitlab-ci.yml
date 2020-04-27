@@ -25,17 +25,21 @@ Publish Docker:
   image: docker:stable
   
   variables:
-    IMAGE_TAG: $CI_COMMIT_TAG || $CI_COMMIT_SHA
+    IMAGE_TAG: "$CI_COMMIT_TAG || $CI_COMMIT_SHA"
+    IMAGE_TAG2: '$CI_COMMIT_TAG || $CI_COMMIT_SHA'
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker pull $CI_REGISTRY_IMAGE:latest || true
-    - echo $IMAGE_TAG $CI_REGISTRY_IMAGE $CI_PROJECT_URL
+    - echo $IMAGE_TAG $IMAGE_TAG2
     - >
       docker build
         --pull
         --cache-from $CI_REGISTRY_IMAGE:latest
         --tag $CI_REGISTRY_IMAGE:$IMAGE_TAG
         --tag $CI_REGISTRY_IMAGE:latest
+        --build-arg http_proxy=$http_proxy
+        --build-arg https_proxy=$https_proxy
+        --build-arg no_proxy=$no_proxy
         --build-arg VCS_REF=$CI_COMMIT_SHA
         --build-arg VCS_URL=$CI_PROJECT_URL .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
