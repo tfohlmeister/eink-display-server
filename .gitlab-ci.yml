@@ -39,7 +39,6 @@ Publish Docker:
         --build-arg https_proxy=$https_proxy
         --build-arg no_proxy=$no_proxy
         --build-arg VCS_REF=$CI_COMMIT_SHA
-        --build-arg VCS_URL=$CI_PROJECT_URL
-      .
+        --build-arg VCS_URL=$CI_PROJECT_URL .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
     - docker push $CI_REGISTRY_IMAGE:latest
