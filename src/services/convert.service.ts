@@ -17,18 +17,23 @@ export class ConvertService {
     }
 
     public static convertFormat(fromMime: string, fromBuffer: Buffer): Promise<Jimp> {
-        return new Promise((resolve, reject) => {
-            try {
-                switch (fromMime) {
-                    case 'image/heic':
-                        const heif = heicDecoder({ buffer: fromBuffer }) as Promise<{data: Buffer}>;
-                        return heif.then(res => new Jimp(res.data));
-                    default:
-                        return reject(`No conversion found for ${fromMime}.`);
-                }
-            } catch(error) {
-                reject(error);
+        try {
+            switch (fromMime) {
+                case 'image/heic':
+                    return (heicDecoder({ buffer: fromBuffer }) as Promise<{data: Buffer; width: number; height: number}>)
+                        .then(res => new Promise((resolve, reject) => {
+                            return new Jimp(res, (err, image) => {
+                                if (err) {
+                                    return reject(err);
+                                }
+                                return resolve(image);
+                            });
+                        }));
+                default:
+                    return Promise.reject(`No conversion found for ${fromMime}.`);
             }
-        });
+        } catch(error) {
+            return Promise.reject(error);
+        }
     }
 }
