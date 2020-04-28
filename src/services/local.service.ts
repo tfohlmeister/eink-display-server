@@ -7,7 +7,7 @@ import { ImageService } from '../data/image.service';
 import { randomInt } from '../util';
 import { ConvertService } from './convert.service';
 
-const imageFileEndings = ['.bmp', '.jpeg', '.jpg', '.png']; // ['.heic']; // ,
+const imageFileEndings = ['.heic', '.bmp', '.jpeg', '.jpg', '.png'];
 
 export class LocalImageService extends ImageService {
     private excludeDirs: Array<string>;
@@ -30,9 +30,7 @@ export class LocalImageService extends ImageService {
             }
 
             // check endings
-            const nameLC = name.toLowerCase();
-            const validFileEnding = imageFileEndings.reduce((acc, ending) => acc || nameLC.endsWith(ending.toLocaleLowerCase()), false);
-            return !validFileEnding;
+            return !this.isValidFileending(name);
         };
         this.watcher = chokidar.watch(dirs, {
             ignorePermissionErrors: true,
@@ -41,10 +39,19 @@ export class LocalImageService extends ImageService {
         });
     }
 
+    private isValidFileending(filename: string): boolean {
+        const name = filename.toLowerCase();
+        return imageFileEndings.reduce((acc, ending) => acc || name.endsWith(ending.toLocaleLowerCase()), false);
+    }
+
     public fetch(): Promise<Jimp> {
         const watched = this.watcher.getWatched();
-        const imageFiles: Array<string> = Object.keys(watched).reduce((acc, key) =>
-            acc.concat(watched[key].map(filename => path.join(key, filename))), []);
+        const imageFiles: Array<string> = Object.keys(watched).reduce((acc, key) => {
+            const fullpaths = watched[key]
+                .map(filename => this.isValidFileending(filename) ? path.join(key, filename) : null)
+                .filter(item => !!item);
+            return acc.concat(fullpaths);
+        }, []);
         console.log('Found', imageFiles.length, 'image(s)');
         if (imageFiles.length === 0) {
             return Promise.reject('No images found');

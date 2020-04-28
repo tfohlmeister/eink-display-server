@@ -21,14 +21,17 @@ export class ConvertService {
             switch (fromMime) {
                 case 'image/heic':
                     return (heicDecoder({ buffer: fromBuffer }) as Promise<{data: Buffer; width: number; height: number}>)
-                        .then(res => new Promise((resolve, reject) => {
-                            return new Jimp(res, (err, image) => {
-                                if (err) {
-                                    return reject(err);
-                                }
-                                return resolve(image);
-                            });
-                        }));
+                        .then(res =>
+                            new Promise((resolve, reject) => {
+                                const jimp = new Jimp(res.width, res.height, err => {
+                                    if (err) {
+                                        return reject(err);
+                                    }
+                                    jimp.bitmap.data = new Buffer(res.data);
+                                    resolve(jimp);
+                                });
+                            })
+                        );
                 default:
                     return Promise.reject(`No conversion found for ${fromMime}.`);
             }

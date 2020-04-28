@@ -24,6 +24,7 @@ Object.keys(routes).map(route => {
         service.fetch()
             .then(image => ConvertService.convertForEInk(image))
             .then(buffer => {
+                res.contentType('image/bmp');
                 res.send(buffer);
                 next();
             })
