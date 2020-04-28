@@ -9,6 +9,7 @@ cache:
   untracked: true
   paths:
    - node_modules/
+   - dist/
 
 Install Dependencies:
   stage: prepare
