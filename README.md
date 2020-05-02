@@ -63,6 +63,7 @@ The following command will mount two local image folders and excludes all folder
 
     docker run -d \
         --name eInkServer \
+        -p 3000:3000 \
         -v /path/to/local/images1:/images/images1 \
         -v /path/to/local/images2:/images/images2 \
         -e LOCAL_FOLDERS=/images/images1,/images/images2 \
