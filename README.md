@@ -1,6 +1,9 @@
 # eInk Display Server
 
-A small NodeJS based server to serve local or public images optimized for common eInk Displays (e.g. from Waveshare).
+A small NodeJS based server to serve local or public images optimized for common eInk Displays (e.g. from Waveshare) in combination with a WiFi-enabled microcontroller (e.g. esp32, esp8266).
+
+**Important:** *This is only the server part. You will need to program your microcontroller yourself so it fetches images from this server using TCP/IP.*
+
 
 Images are converted to BMP and translated into black and white "grayscale" using [Floyd Steinberg dithering](https://en.wikipedia.org/wiki/Floyd%E2%80%93Steinberg_dithering).
 
