@@ -32,7 +32,8 @@ Object.keys(routes).map(route => {
                 next();
             })
             .catch(error => {
-                next(error);
+                res.json({error});
+                next();
             });
         });
 });
