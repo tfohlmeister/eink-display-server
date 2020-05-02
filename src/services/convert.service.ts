@@ -5,8 +5,8 @@ import * as Jimp from 'jimp';
 export class ConvertService {
     public static readonly needsConvertingEndings = ['.heic'];
 
-    public static convertForEInk(image: Jimp): Promise<Buffer> {
-        const cropped = image.cover(800, 480);
+    public static convertForEInk(image: Jimp, w: number, h: number): Promise<Buffer> {
+        const cropped = image.cover(w, h);
         cropped.bitmap = floydSteinberg(cropped.bitmap);
         return cropped.getBufferAsync('image/bmp');
     }
