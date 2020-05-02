@@ -13,11 +13,15 @@ cache:
 
 Install Dependencies:
   stage: prepare
+  only:
+      - tags
   script:
     - npm install
 
 Build App:
   stage: build
+  only:
+    - tags
   script:
     - npm run build
 
