@@ -45,9 +45,10 @@ This will make the server available on port 3000 on the host machine.
         --name eInkServer \
         tfohlmeister/eink-display-server:latest
 
+You can now load an eInk-optimized version of a random wallpaper at `http://$HOST_IP/wallpaper.bmp`.
 
 ### Advanced examples
-This will mount a local image folder `/path/to/local/images`:
+This command will mount a local image folder `/path/to/local/images`:
 
     docker run -d \
         --name eInkServer \
@@ -55,8 +56,7 @@ This will mount a local image folder `/path/to/local/images`:
         -v /path/to/local/images:/images \
         tfohlmeister/eink-display-server:latest
 
-
-This will mount two local image folders and excludes all folders called `PrivatePictures`:
+The following command will mount two local image folders and excludes all folders called `PrivatePictures`:
 
     docker run -d \
         --name eInkServer \
@@ -66,6 +66,7 @@ This will mount two local image folders and excludes all folders called `Private
         -e LOCAL_EXCLUDE=PrivatePictures \
         tfohlmeister/eink-display-server:latest
 
+You should now be able to also display eInk-optimized versions of your mounted images at `http://$HOST_IP/local.bmp`.
 
 # Development
 
