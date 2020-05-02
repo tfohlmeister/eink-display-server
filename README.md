@@ -48,7 +48,7 @@ This will make the server available on port 3000 on the host machine.
         --name eInkServer \
         tfohlmeister/eink-display-server:latest
 
-You can now load an eInk-optimized version of a random wallpaper at `http://$HOST_IP/wallpaper.bmp`.
+You can then load an eInk-optimized version of a random wallpaper at `http://$HOST_IP:3000/wallpaper.bmp`.
 
 ### Advanced examples
 This command will mount a local image folder `/path/to/local/images`:
@@ -69,7 +69,7 @@ The following command will mount two local image folders and excludes all folder
         -e LOCAL_EXCLUDE=PrivatePictures \
         tfohlmeister/eink-display-server:latest
 
-You should now be able to also display eInk-optimized versions of your mounted images at `http://$HOST_IP/local.bmp`.
+You should now be able to also display eInk-optimized versions of your mounted images at `http://$HOST_IP:3000/local.bmp`.
 
 # Development
 
