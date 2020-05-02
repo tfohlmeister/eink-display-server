@@ -37,24 +37,26 @@ Configuration is done using environmental variables, all of which are optional a
 
 ## Run Docker container
 
-Simple run with defaults:
+### Run with defaults
+This will make the server available on port 3000 on the host machine.
 
     docker run -d \
+        -p 3000:3000
         --name eInkServer \
         tfohlmeister/eink-display-server:latest
 
 
 ### Advanced examples
-With mounted local image folders:
+This will mount a local image folder `/path/to/local/images`:
 
     docker run -d \
         --name eInkServer \
-        -p 3000:3000
+        -p 3000:3000 \  
         -v /path/to/local/images:/images \
         tfohlmeister/eink-display-server:latest
 
 
-With two mounted image folders and defined excludes
+This will mount two local image folders and excludes all folders called `PrivatePictures`:
 
     docker run -d \
         --name eInkServer \
