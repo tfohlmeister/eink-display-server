@@ -14,7 +14,8 @@
     "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
     "debug": "npm run build && npm run watch-debug",
     "serve-debug": "nodemon --inspect-brk dist/server.js",
-    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\""
+    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\"",
+    "version": "npm run build"
   },
   "keywords": [],
   "author": "",
