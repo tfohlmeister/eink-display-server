@@ -9,7 +9,7 @@ const LOCAL_FOLDERS = process.env.LOCAL_FOLDERS ? (process.env.LOCAL_FOLDERS || 
 const LOCAL_EXCLUDE = (process.env.LOCAL_EXCLUDE || '').split(',');
 const LOCAL_SHOW_HIDDEN = Boolean(process.env.LOCAL_SHOW_HIDDEN) || false;
 const EINK_WIDTH = Number(process.env.EINK_WIDTH) || 800;
-const EINK_HEIGHT = Number(process.env.EINK_WIDTH) || 480;
+const EINK_HEIGHT = Number(process.env.EINK_HEIGHT) || 480;
 const app = express();
 // route definitions
 const routes = {
