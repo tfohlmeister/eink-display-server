@@ -22,7 +22,7 @@ class ConvertService {
                             if (err) {
                                 return reject(err);
                             }
-                            jimp.bitmap.data = new Buffer(res.data);
+                            jimp.bitmap.data = Buffer.from(res.data);
                             resolve(jimp);
                         });
                     }));
