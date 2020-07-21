@@ -25,7 +25,7 @@ class LocalImageService extends image_service_1.ImageService {
             return !this.isValidFileending(name);
         };
         this.watcher = chokidar.watch(dirs, {
-            ignorePermissionErrors: true,
+            ignorePermissionErrors: false,
             ignored: checkIgnored,
         });
     }
