@@ -2,10 +2,10 @@ import * as chokidar from 'chokidar';
 import * as fs from 'fs';
 import * as Jimp from 'jimp';
 import * as path from 'path';
-
 import { ImageService } from '../data/image.service';
 import { randomInt } from '../util';
 import { ConvertService } from './convert.service';
+
 
 const imageFileEndings = ['.heic', '.bmp', '.jpeg', '.jpg', '.png'];
 
@@ -33,7 +33,7 @@ export class LocalImageService extends ImageService {
             return !this.isValidFileending(name);
         };
         this.watcher = chokidar.watch(dirs, {
-            ignorePermissionErrors: true,
+            ignorePermissionErrors: false,
             ignored: checkIgnored,
             
         });
