@@ -5,7 +5,7 @@ import { LocalImageService } from './services/local.service';
 import { WallhavenImageService } from './services/wallhaven.service';
 
 
-const PORT = Number(process.env.PORT) || 3000;
+const PORT = 3000;
 const LOCAL_FOLDERS = process.env.LOCAL_FOLDERS ? (process.env.LOCAL_FOLDERS || '').split(',') : ['/images'];
 const LOCAL_EXCLUDE = (process.env.LOCAL_EXCLUDE || '').split(',');
 const LOCAL_SHOW_HIDDEN = Boolean(process.env.LOCAL_SHOW_HIDDEN) || false;
@@ -20,22 +20,30 @@ const routes: {[key in string]: ImageService} = {
     '/local.bmp': new LocalImageService(LOCAL_FOLDERS, LOCAL_SHOW_HIDDEN, LOCAL_EXCLUDE)
 };
 
+const handleService = (service: ImageService, req, res) => {
+    service.fetch()
+    .then(image => ConvertService.convertForEInk(image, EINK_WIDTH, EINK_HEIGHT))
+    .then(buffer => {
+        res.status(200);
+        res.contentType('image/bmp');
+        res.send(buffer);
+        res.end();
+    })
+    .catch(error => {
+        res.status(500).json({error});
+    });
+};
+
 // setup routes
 Object.keys(routes).map(route => {
-    app.get(route, (req, res, next) => {
+    app.get(route, (req, res) => {
         const service = routes[route];
-        service.fetch()
-            .then(image => ConvertService.convertForEInk(image, EINK_WIDTH, EINK_HEIGHT))
-            .then(buffer => {
-                res.contentType('image/bmp');
-                res.send(buffer);
-                next();
-            })
-            .catch(error => {
-                res.json({error});
-                next();
-            });
-        });
+        handleService(service, req, res);
+    });
+});
+
+app.get('/health', (req, res) => {
+    res.json({status: 'healthy'});
 });
   
 app.listen(PORT, '0.0.0.0' , () => {

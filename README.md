@@ -27,13 +27,12 @@ Endpoint: `/wallpaper.bmp`
 
 ## Configuration
 
-Configuration is done using environmental variables, all of which are optional and have reasonable defaults. You probably want to adapt *EINK_WIDTH* and *EINK_HEIGHT* to match your specific display. The following options are available:
+The server listens on port 3000 and individual configuration is done using environmental variables, all of which are optional and have reasonable defaults. You probably want to adapt *EINK_WIDTH* and *EINK_HEIGHT* to match your specific display. The following options are available:
 
 | Environmental Variable    | Required  | Default   | Description   |
 | ---                       | ---       | ---       | ---           |
 | *EINK_WIDTH* | *false* | 800 | Display width in pixels. Used to scale the original image up or down to this width. |
 | *EINK_HEIGHT* | *false* | 480 | Display height in pixels. Used to scale the original image up or down to this height. |
-| *PORT* | *false* | 3000 | Server port to listen on |
 | *LOCAL_FOLDERS* | *false* | `/images` | Comma separated list of folders to include in local image list |
 | *LOCAL_EXCLUDE* | *false* | *empty* | Comma separated list of (sub-)folder names to be excluded from *LOCAL_FOLDERS* |
 | *LOCAL_SHOW_HIDDEN* | *false* | *false* | Wether to use hidden files (=starting with a dot) in *LOCAL_FOLDERS*. |
