@@ -1,4 +1,4 @@
-FROM node:lts
+FROM node:lts-slim
 LABEL maintainer="thorben@fohlmeister.com"
 
 WORKDIR /opt/einkserver
