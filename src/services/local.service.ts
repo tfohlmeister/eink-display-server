@@ -35,8 +35,10 @@ export class LocalImageService extends ImageService {
         this.watcher = chokidar.watch(dirs, {
             ignorePermissionErrors: false,
             ignored: checkIgnored,
-            
         });
+        this.watcher
+            .on('error', error => console.error(`Watcher error: ${error}`))
+            .on('ready', () => console.log(`Initial scan complete. Watching ${Object.keys(this.watcher.getWatched())} item(s).`));
     }
 
     private isValidFileending(filename: string): boolean {
