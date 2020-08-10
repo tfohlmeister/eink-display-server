@@ -28,6 +28,9 @@ class LocalImageService extends image_service_1.ImageService {
             ignorePermissionErrors: false,
             ignored: checkIgnored,
         });
+        this.watcher
+            .on('error', error => console.error(`Watcher error: ${error}`))
+            .on('ready', () => console.log(`Initial scan complete. Watching ${Object.keys(this.watcher.getWatched()).length} item(s).`));
     }
     isValidFileending(filename) {
         const name = filename.toLowerCase();
