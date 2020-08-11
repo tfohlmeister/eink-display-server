@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 
 
-fetch('http://localhost:3000/health')
+fetch('http://localhost:3000/')
   .then(result => {
     console.info(`Performed health check, result ${result.status}.`);
     if (result.status === 200) {

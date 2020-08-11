@@ -15,12 +15,12 @@ const EINK_HEIGHT = Number(process.env.EINK_HEIGHT) || 480;
 const app = express();
 
 // route definitions
-const routes: {[key in string]: ImageService} = {
+const imageRoutes: {[key in string]: ImageService} = {
     '/wallpaper.bmp': new WallhavenImageService(),
     '/local.bmp': new LocalImageService(LOCAL_FOLDERS, LOCAL_SHOW_HIDDEN, LOCAL_EXCLUDE)
 };
 
-const handleService = (service: ImageService, req, res) => {
+const handleService = (service: ImageService, req: express.Request, res: express.Response) => {
     service.fetch()
     .then(image => ConvertService.convertForEInk(image, EINK_WIDTH, EINK_HEIGHT))
     .then(buffer => {
@@ -35,15 +35,21 @@ const handleService = (service: ImageService, req, res) => {
 };
 
 // setup routes
-Object.keys(routes).map(route => {
+Object.keys(imageRoutes).map(route => {
     app.get(route, (req, res) => {
-        const service = routes[route];
+        const service = imageRoutes[route];
         handleService(service, req, res);
     });
 });
 
-app.get('/health', (req, res) => {
-    res.json({status: 'healthy'});
+app.get('/', (req, res) => {
+    res.json({
+        routes: Object.keys(imageRoutes)
+    });
+})
+
+app.get('*', (req, res) => {
+    res.redirect('/');
 });
   
 app.listen(PORT, '0.0.0.0' , () => {
