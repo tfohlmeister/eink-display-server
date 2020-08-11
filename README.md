@@ -71,6 +71,12 @@ The following command will mount two local image folders and excludes all folder
 
 You should now be able to also display eInk-optimized versions of your mounted images at `http://$HOST_IP:3000/local.bmp`.
 
+# Troubleshooting
+
+If you see `Watcher Error`s in the log stating the `system limit for number of file watchers reached`, you need to [increase the amount of inotify watchers](https://github.com/guard/listen/wiki/Increasing-the-amount-of-inotify-watchers) on your (host) system. Restart the application afterwards.
+
+If you found a bug or find this project is missing a feature please create an Issue.
+
 # Development
 
 

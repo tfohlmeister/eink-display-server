@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.WallhavenImageService = void 0;
 const Jimp = require("jimp");
 const wallhaven = require("wallhaven.js");
 const image_service_1 = require("../data/image.service");

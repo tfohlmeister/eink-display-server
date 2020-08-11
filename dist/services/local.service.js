@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.LocalImageService = void 0;
 const chokidar = require("chokidar");
 const fs = require("fs");
 const Jimp = require("jimp");

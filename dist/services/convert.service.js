@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ConvertService = void 0;
 const heicDecoder = require("heic-decode");
 const Jimp = require("jimp");
 class ConvertService {
