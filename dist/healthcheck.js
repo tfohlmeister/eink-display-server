@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const node_fetch_1 = require("node-fetch");
 node_fetch_1.default('http://localhost:3000/health')
     .then(result => {
-    console.info(`Performed health check, result ${result.status}`);
+    console.info(`Performed health check, result ${result.status}.`);
     if (result.status === 200) {
         process.exit(0);
     }

@@ -31,7 +31,7 @@ class LocalImageService extends image_service_1.ImageService {
         });
         this.watcher
             .on('error', error => console.error(`Watcher error: ${error}`))
-            .on('ready', () => console.log(`Initial scan complete. Watching ${Object.keys(this.watcher.getWatched()).length} item(s).`));
+            .on('ready', () => console.log('Initial scan complete.'));
     }
     isValidFileending(filename) {
         const name = filename.toLowerCase();
