@@ -12,7 +12,7 @@ const EINK_WIDTH = Number(process.env.EINK_WIDTH) || 800;
 const EINK_HEIGHT = Number(process.env.EINK_HEIGHT) || 480;
 const app = express();
 // route definitions
-const routes = {
+const imageRoutes = {
     '/wallpaper.bmp': new wallhaven_service_1.WallhavenImageService(),
     '/local.bmp': new local_service_1.LocalImageService(LOCAL_FOLDERS, LOCAL_SHOW_HIDDEN, LOCAL_EXCLUDE)
 };
@@ -30,14 +30,19 @@ const handleService = (service, req, res) => {
     });
 };
 // setup routes
-Object.keys(routes).map(route => {
+Object.keys(imageRoutes).map(route => {
     app.get(route, (req, res) => {
-        const service = routes[route];
+        const service = imageRoutes[route];
         handleService(service, req, res);
     });
 });
-app.get('/health', (req, res) => {
-    res.json({ status: 'healthy' });
+app.get('/', (req, res) => {
+    res.json({
+        routes: Object.keys(imageRoutes)
+    });
+});
+app.get('*', (req, res) => {
+    res.redirect('/');
 });
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server is listening on port ${PORT}`);
