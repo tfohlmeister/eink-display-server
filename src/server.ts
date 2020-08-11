@@ -46,7 +46,7 @@ app.get('/', (req, res) => {
     res.json({
         routes: Object.keys(imageRoutes)
     });
-})
+});
 
 app.get('*', (req, res) => {
     res.redirect('/');
