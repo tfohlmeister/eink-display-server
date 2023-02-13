@@ -17,6 +17,7 @@ const localService = new LocalImageService(LOCAL_FOLDERS, LOCAL_SHOW_HIDDEN, LOC
 // route definitions
 const imageRoutes: { [key in string]: ImageService } = {
   "/local.bmp": localService,
+  "/local.png": localService,
 };
 
 const handleService = async (service: ImageService, req: express.Request, res: express.Response) => {
