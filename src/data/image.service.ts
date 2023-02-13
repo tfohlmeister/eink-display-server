@@ -1,12 +1,11 @@
-import * as Jimp from 'jimp';
-
+import * as Jimp from "jimp";
 
 export abstract class ImageService {
-    private preFetch: boolean;
+  protected preFetch: boolean;
 
-    constructor(preFetch = true) {
-        this.preFetch = preFetch;
-    }
+  constructor(preFetch = true) {
+    this.preFetch = preFetch;
+  }
 
-    public abstract fetch(): Promise<Jimp>;
+  public abstract fetch(): Promise<Jimp>;
 }
