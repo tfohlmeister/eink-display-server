@@ -7,7 +7,7 @@ WORKDIR /opt/einkserver
 ENV NODE_PATH=/usr/local/lib/node_modules/:/usr/local/lib NODE_ENV=production
 
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 COPY dist/ .
 
 RUN mkdir -p /images    
