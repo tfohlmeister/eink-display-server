@@ -10,8 +10,7 @@
     "watch": "nodemon --watch src --ext js,ts --exec 'node -r ts-node/register' src/server.ts",
     "build-ts": "tsc",
     "debug": "npm run build && npm run watch-debug",
-    "watch-debug": "nodemon --watch src --ext js,ts --exec 'node -r ts-node/register --inspect' src/server.ts",
-    "preversion": "npm run build && git add -A dist"
+    "watch-debug": "nodemon --watch src --ext js,ts --exec 'node -r ts-node/register --inspect' src/server.ts"
   },
   "keywords": [],
   "author": "",
